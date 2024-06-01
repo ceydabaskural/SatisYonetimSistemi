@@ -1,0 +1,39 @@
+﻿@model IEnumerable<SatisYonetimSistemi.Models.Status>
+
+@{
+    ViewData["Title"] = "Satış Yönetim Sistemi";
+}
+
+<table class="table table-bordered table-striped ">
+    <thead>
+        <tr style="background-color:darkgray">
+            <th>
+                @Html.DisplayNameFor(model => model.StatusName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RowNo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RowNo)
+            </td>
+            <td>
+                <a  class="text-primary" asp-action="Edit" asp-route-statusid="@item.StatusId">güncelle</a> /
+                <a  class="text-primary" asp-action="Delete" asp-route-statusid="@item.StatusId">sil</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Create">Durum Ekle</a>
+</p>

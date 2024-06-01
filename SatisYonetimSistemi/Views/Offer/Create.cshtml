@@ -1,0 +1,44 @@
+﻿@model OfferCreateModel
+
+@{
+    ViewData["Title"] = "Satış Yönetim Sistemi";
+}
+
+<h4>Teklif Ekle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Offer.OfferTitle" class="control-label"></label>
+                <input asp-for="Offer.OfferTitle" class="form-control" />
+                <span asp-validation-for="Offer.OfferTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Offer.CustomerName" class="control-label"></label>
+                <input asp-for="Offer.CustomerName" class="form-control" />
+                <span asp-validation-for="Offer.CustomerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Offer.Price" class="control-label"></label>
+                <input asp-for="Offer.Price" class="form-control" />
+                <span asp-validation-for="Offer.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Offer.StatusId" class="control-label"></label>
+                <select asp-for="Offer.StatusId" class="form-control" >
+                @foreach(var item in Model.Statuses)
+                {
+                    <option value="@item.StatusId">@item.StatusName</option>
+                }
+                </select>
+                <span asp-validation-for="Offer.StatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Ekle" class="btn btn-light" />
+            </div>
+        </form>
+    </div>
+</div>
+

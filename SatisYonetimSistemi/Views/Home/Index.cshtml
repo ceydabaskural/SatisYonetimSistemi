@@ -1,0 +1,39 @@
+﻿@model HomeIndexModel
+
+@{
+    ViewData["Title"] = "Anasayfa";
+}
+
+
+<table class="table table-bordered table-striped col">
+    <tbody>
+        <tr>
+            @foreach (var status in (List<Status>)ViewBag.GetStatusList)
+            {
+                //Don't forget to convert price to dinamic
+                <th>@status.StatusName (50.000 TL)</th>
+            }
+
+            @foreach (var offer in Model.OfferList)
+            {
+            <tr>
+                <td>
+                        @offer.OfferTitle
+                    <br />
+                        @offer.CustomerName
+                   
+                    <br />
+                        @offer.Price.ToString("n0") TL
+
+                    <a class="text-primary text-center" asp-action="Edit" asp-controller="Offer" asp-route-id="@offer.OfferId">güncelle</a> /
+                    <a class="text-primary text-center" asp-action="Delete" asp-controller="Offer" asp-route-id="@offer.OfferId">sil</a>
+                </td>
+
+            </tr>
+            }
+        </tr>
+    </tbody>
+</table>
+<p>
+    <a asp-controller="Offer" asp-action="Create">Teklif Ekle</a>
+</p>

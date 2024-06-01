@@ -1,0 +1,30 @@
+﻿@model SatisYonetimSistemi.Models.Status
+
+@{
+    ViewData["Title"] = "Satış Yönetim Sistemi";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="StatusId" class="form-control" type="hidden"/>
+            <div class="form-group">
+                <label asp-for="StatusName" class="control-label"></label>
+                <input asp-for="StatusName" class="form-control" />
+                <span asp-validation-for="StatusName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RowNo" class="control-label"></label>
+                <input asp-for="RowNo" class="form-control" />
+                <span asp-validation-for="RowNo" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="güncelle" class="btn btn-light" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

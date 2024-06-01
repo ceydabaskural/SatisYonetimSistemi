@@ -1,0 +1,45 @@
+﻿@model Offer
+
+@{
+    ViewData["Title"] = "Satış Yönetim Sistemi";
+}
+
+<h4>Teklif</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="OfferId" class="form-control" type="hidden" />
+            <div class="form-group">
+                <label asp-for="OfferTitle" class="control-label"></label>
+                <input asp-for="OfferTitle" class="form-control" />
+                <span asp-validation-for="OfferTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerName" class="control-label"></label>
+                <input asp-for="CustomerName" class="form-control" />
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StatusId" class="control-label"></label>
+                <select asp-for="StatusId" class="form-control" >
+                @foreach (var item in ViewBag.DurumListesi)
+                {
+                    <option value="@item.StatusId">@item.StatusName</option>
+                }
+                </select>
+                <span asp-validation-for="StatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="güncelle" class="btn btn-light" />
+            </div>
+        </form>
+    </div>
+</div>
+
