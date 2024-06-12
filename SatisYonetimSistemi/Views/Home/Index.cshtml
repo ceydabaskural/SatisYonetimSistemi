@@ -6,34 +6,31 @@
 
 
 <table class="table table-bordered table-striped col">
+    <thead class="">
+        @foreach (var status in Model.OfferViewModels)
+        {
+        <th scope="col">@status.StatusName (@status.Price.ToString("n0") TL)</th>
+        }
+    </thead>
     <tbody>
         <tr>
-            @foreach (var status in (List<Status>)ViewBag.GetStatusList)
-            {
-                //Don't forget to convert price to dinamic
-                <th>@status.StatusName (50.000 TL)</th>
-            }
-
-            @foreach (var offer in Model.OfferList)
+            @foreach (var offer in Model.OfferViewModels)
             {
             <tr>
-                <td>
+                <td scope="row">
                         @offer.OfferTitle
                     <br />
                         @offer.CustomerName
-                   
+
                     <br />
                         @offer.Price.ToString("n0") TL
 
                     <a class="text-primary text-center" asp-action="Edit" asp-controller="Offer" asp-route-id="@offer.OfferId">güncelle</a> /
                     <a class="text-primary text-center" asp-action="Delete" asp-controller="Offer" asp-route-id="@offer.OfferId">sil</a>
-                </td>
 
+                </td>
             </tr>
             }
         </tr>
     </tbody>
 </table>
-<p>
-    <a asp-controller="Offer" asp-action="Create">Teklif Ekle</a>
-</p>

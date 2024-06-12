@@ -3,11 +3,13 @@ using System.Data;
 
 namespace SatisYonetimSistemi.Models
 {
-    public class HomeIndexModel
+    public class HomeIndexModel 
     {
-        public Status GetStatus {  get; set; }
+        public List<OfferViewModel> OfferViewModels {  get; set; }
         public List<Status> StatusList {  get; set; }
 
-        public List<Offer> OfferList { get; set; }
+        public List<Offer> GetOffers { get; set; }
+
+        
     }
 }

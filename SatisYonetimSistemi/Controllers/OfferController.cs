@@ -126,8 +126,8 @@ namespace SatisYonetimSistemi.Controllers
 
         public OfferViewModel GetOfferViewModel(int id)
         {
-            SqlDataAdapter adapter = new SqlDataAdapter("select * from dbo.Offer as o inner join dbo.Status as s on s.StatusId=o.StatusId where o.StatusId=@StatusId", sqlConnection);
-            adapter.SelectCommand.Parameters.AddWithValue("StatusId", id);
+            SqlDataAdapter adapter = new SqlDataAdapter("select * from dbo.Offer as o inner join dbo.Status as s on s.StatusId=o.StatusId where o.OfferId=@OfferId", sqlConnection);
+            adapter.SelectCommand.Parameters.AddWithValue("OfferId", id);
             DataTable data = new DataTable();
             adapter.Fill(data);
 
@@ -222,16 +222,17 @@ namespace SatisYonetimSistemi.Controllers
         [HttpPost]
         public IActionResult Delete(Offer model)
         {
+            OfferViewModel viewModel = GetOfferViewModel(model.OfferId);
 
-            SqlDataAdapter sqlData = new SqlDataAdapter("select * from dbo.Offer where OfferId=@OfferId ", sqlConnection);
-            sqlData.SelectCommand.Parameters.AddWithValue("OfferId", model.OfferId);
+            //SqlDataAdapter sqlData = new SqlDataAdapter("select * from dbo.Offer where OfferId=@OfferId ", sqlConnection);
+            //sqlData.SelectCommand.Parameters.AddWithValue("OfferId", model.OfferId);
 
-            DataTable table = new DataTable();
-            sqlData.Fill(table);
+            //DataTable table = new DataTable();
+            //sqlData.Fill(table);
 
-            if (table.Rows.Count == 0)
+            if (viewModel == null)
             {
-                return View(model);
+                return View(viewModel);
             }
             else
             {

@@ -16,19 +16,19 @@ namespace SatisYonetimSistemi.Controllers
         }
         public IActionResult Index(int id)
         {
-            ViewBag.GetStatusList = GetStatusList();
+            //ViewBag.GetStatusList = GetStatusList();
 
-            HomeIndexModel homeIndex = new HomeIndexModel
+            HomeIndexModel homeIndex = new HomeIndexModel();
             {
-                //StatusList = GetStatus(id),
-                OfferList = GetOfferList(id),
+                homeIndex.StatusList = GetStatusList();
+                homeIndex.GetOffers = GetOfferList();
+                homeIndex.OfferViewModels = GetOfferViewModel(id);
 
-            };
-
-            return View(homeIndex);
+                return View(homeIndex);
+            }
         }
 
-
+        
         public List<Status> GetStatusList()
         {
 
@@ -49,10 +49,9 @@ namespace SatisYonetimSistemi.Controllers
             return list;
         }
 
-        public List<Offer> GetOfferList(int statusId)
+        public List<Offer> GetOfferList()
         {
-            SqlDataAdapter sqlAdapter = new SqlDataAdapter("select * from dbo.Offer where StatusId=@StatusId", _connection);
-            sqlAdapter.SelectCommand.Parameters.AddWithValue("StatusId", statusId);
+            SqlDataAdapter sqlAdapter = new SqlDataAdapter("select * from dbo.Offer", _connection);
             DataTable dataTable = new DataTable();
             sqlAdapter.Fill(dataTable);
 
@@ -60,17 +59,18 @@ namespace SatisYonetimSistemi.Controllers
 
             foreach (DataRow offer in dataTable.Rows)
             {
-               Offer offer1 = new Offer
+                Offer offer1 = new Offer
                 {
                     OfferId = Convert.ToInt32(offer["OfferId"]),
                     OfferTitle = (offer["OfferTitle"]).ToString(),
                     CustomerName = (offer["CustomerName"]).ToString(),
                     Price = Convert.ToDecimal(offer["Price"]),
                     StatusId = Convert.ToInt32(offer["StatusId"]),
+                    
                 };
                 offerslist.Add(offer1);
             }
-                return offerslist;
+            return offerslist;
         }
 
         public Status GetStatus(int statusId)
@@ -80,13 +80,35 @@ namespace SatisYonetimSistemi.Controllers
             DataTable dataTable = new DataTable();
             da.Fill(dataTable);
 
-                Status status= new Status
-                {
-                    StatusId = Convert.ToInt32(dataTable.Rows[0]["StatusId"]),
-                    StatusName = dataTable.Rows[0]["StatusName"].ToString()
-                };
-            
+            Status status = new Status
+            {
+                StatusId = Convert.ToInt32(dataTable.Rows[0]["StatusId"]),
+                StatusName = dataTable.Rows[0]["StatusName"].ToString()
+            };
+
             return status;
+        }
+
+        public List<OfferViewModel> GetOfferViewModel(int offerId)
+        {
+            SqlDataAdapter dataAdapter = new SqlDataAdapter("select * from dbo.Status as s inner join dbo.Offer as o on o.StatusId=s.StatusId", _connection);
+            DataTable dataTable = new DataTable();
+            dataAdapter.Fill(dataTable);
+
+            List<OfferViewModel> indexModels = new List<OfferViewModel>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                indexModels.Add(new OfferViewModel
+                {
+                    OfferId = Convert.ToInt32(row["OfferId"]),
+                    OfferTitle = (row["OfferTitle"]).ToString(),
+                    CustomerName = (row["CustomerName"]).ToString(),
+                    Price = Convert.ToDecimal(row["Price"]),
+                    StatusId = Convert.ToInt32(row["StatusId"]),
+                    StatusName = (row["StatusName"]).ToString(),
+                });
+            }
+            return indexModels;
         }
 
     }
